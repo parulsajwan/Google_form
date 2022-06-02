@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"> 
+    {% load static %}
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'css/all.css'%}">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
+    <!-- Custom -->
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+    <!--lightbox-->
+    <link rel="stylesheet" href="{% static 'css/lighbox.min.css'%}">
+    <title>my site </title>
+</head>
+
+<body>
+    <section id="form" class="bg-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h4>
+                                <i class="fas fa-sign-in-alt"></i>{{form_name}} Form </h4>
+                        </div>
+                        <div class="card-body">
+                            <form action="{% url 'form_post' %}" method="post" id="submit_form">
+                                {% csrf_token %} 
+                                <input type="hidden" name="Form_name" value="{{form_name}}" >
+                                {% for k in details %}
+                                {% if k.type == 'singleSelect' and k.mandatory|upper == 'TRUE' %}
+                                <div class="form-group">
+                                    <label for="{{k.field_name}}">{{k.field_name}}:</label>
+                                    <select name="{{k.field_name}}" id="{{k.field_name}}" form="submit_form" required>
+                                        {% for opt in  k.options %}
+                                        <option value="{{opt}}">{{opt}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                {% elif k.type == 'singleSelect' and k.mandatory|upper == 'FALSE' %}
+                                <div class="form-group">
+                                    <label for="{{k.field_name}}">{{k.field_name}}:</label>
+                                    <select name="{{k.field_name}}" id="{{k.field_name}}" form="submit_form">
+                                        {% for opt in k.options %}
+                                        <option value="{{opt}}">{{opt}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                {% elif k.type != 'singleSelect' and k.mandatory|upper == 'TRUE'%}
+                                <div>
+                                <label for="{{k.field_name}}">{{k.field_name}}:</label>
+                                <input type="{{k.type}}"  name="{{k.field_name}}" class="form-control" required >
+                                </div><br>
+                                {% else %}
+                                <div>
+                                <label for="{{k.field_name}}">{{k.field_name}}:</label>
+                                <input type="{{k.type}}"  name="{{k.field_name}}" class="form-control">
+                                </div><br>
+                                {% endif %}
+                                {% endfor %}
+                                <input type="submit" value="Submit" class="btn btn-secondary btn-block">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="{%static 'js/jquery-3.3.1.min.js'%}"></script>
+    <script src="{%static 'js/bootstrap.bundle.min.js'%}"></script>
+    <script src="{%static 'js/bootstrap.lightbox.js'%}"></script>
+    <script src="{%static 'js/main.js'%}"></script>
+</body>
