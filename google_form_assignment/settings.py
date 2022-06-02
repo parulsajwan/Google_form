@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'google_form_assignment.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'your-db-name',
+        'NAME': 'formdatabase',
     }
 }
 

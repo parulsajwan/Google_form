@@ -9,14 +9,13 @@ class Form(models.Model):
 
     def __str__(self):
         return self.name
-    
-    
+
 
 class FormTemplate(models.Model):
     form_name = models.CharField(max_length=150, blank=False, null=False)
-    template_data = models.TextField(blank=False, null=False)
+    template_data = models.JSONField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.field_name
+        return self.form_name

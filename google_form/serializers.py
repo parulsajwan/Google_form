@@ -7,6 +7,7 @@ class FormDetailCreateSerializer(serializers.ModelSerializer):
         model = Form
         fields = '__all__'
 
+
 class TemplateFormSerializer(serializers.ModelSerializer):
     class Meta:
         model = FormTemplate
